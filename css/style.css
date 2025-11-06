@@ -1,0 +1,214 @@
+/* General styling */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #0f1419;
+  color: #e8e6e3;
+  margin: 0;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 20% 50% 30%;
+  height: 100vh;
+}
+
+/* Sidebar (Left) */
+.sidebar-left {
+  border-right: 1px solid #2f3336;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.sidebar-left .logo {
+  color: #1da1f2;
+  margin-bottom: 20px;
+}
+
+.sidebar-left nav a {
+  color: #e8e6e3;
+  text-decoration: none;
+  padding: 10px 0;
+  display: block;
+  font-size: 1.1em;
+}
+
+.sidebar-left nav a:hover {
+  color: #1da1f2;
+}
+
+/* Center Feed */
+.feed-area {
+  border-right: 1px solid #2f3336;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Post box (like "What’s happening?") */
+.post-box {
+  background-color: #16181c;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.post-box textarea,
+.post-box input {
+  width: 100%;
+  background-color: #16181c;
+  border: none;
+  border-bottom: 1px solid #2f3336;
+  color: #fff;
+  padding: 10px;
+  resize: none;
+}
+
+.post-box button {
+  background-color: #1da1f2;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  float: right;
+  cursor: pointer;
+}
+
+.post-box button:hover {
+  background-color: #0d8adb;
+}
+
+/* Post styling */
+.post {
+  background-color: #16181c;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #2f3336;
+}
+
+.post h4 {
+  margin: 0;
+  font-size: 1.1em;
+}
+
+.post p {
+  margin: 8px 0;
+}
+
+.post .tag {
+  color: #1da1f2;
+  font-size: 0.9em;
+}
+
+.reactions {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.reactions button {
+  background: none;
+  border: none;
+  color: #1da1f2;
+  cursor: pointer;
+}
+
+/* Sidebar (Right) */
+.sidebar-right {
+  padding: 20px;
+}
+
+.trending {
+  background-color: #16181c;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.trending h3 {
+  margin-top: 0;
+  color: #fff;
+}
+
+.trending ul {
+  list-style: none;
+  padding: 0;
+}
+
+.trending li {
+  color: #1da1f2;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+/* Scroll behavior */
+.feed-area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.feed-area::-webkit-scrollbar-thumb {
+  background: #2f3336;
+  border-radius: 10px;
+}
+
+/* Auth Pages */
+.auth-body {
+  background-color: #0f1419;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.auth-container {
+  background-color: #16181c;
+  padding: 30px;
+  border-radius: 12px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+.auth-container input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  background-color: #202327;
+  color: #fff;
+}
+
+.auth-container button {
+  background-color: #1da1f2;
+  border: none;
+  color: white;
+  padding: 10px;
+  border-radius: 20px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.auth-container button:hover {
+  background-color: #0d8adb;
+}
+
+.auth-container a {
+  color: #1da1f2;
+  text-decoration: none;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 100%;
+  }
+  .sidebar-left, .sidebar-right {
+    display: none;
+  }
+  .feed-area {
+    border: none;
+    padding: 10px;
+  }
+}
