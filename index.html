@@ -3,49 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Urumuri Platform</title>
+  <title>Home - Urumuri Platform</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div class="container">
 
-    <!-- Left Sidebar -->
     <aside class="sidebar-left">
-      <h2 class="logo">URUMURI</h2>
+      <div class="logo">URUMURI</div>
       <nav>
-        <a href="#">🏠 Home</a>
-        <a href="#">📊 Dashboard</a>
-        <a href="#">👤 Profile</a>
-        <a href="login.html">🚪 Logout</a>
+        <a href="index.html" style="color: #1d9bf0; font-weight: bold;">🏠 Home</a>
+        <a href="dashboard.html">📊 Dashboard</a>
+        <a href="profile.html">👤 Profile</a>
+        <a href="#" onclick="localStorage.clear(); window.location.href='login.html'">🚪 Logout</a>
       </nav>
     </aside>
 
-    <!-- Center Feed -->
     <main class="feed-area">
       <div class="post-box">
         <textarea id="postText" placeholder="What's happening in your school?"></textarea>
-        <input type="text" id="tags" placeholder="Optional tag (e.g., REB, MINEDUC)">
-        <button id="postBtn">Post</button>
+        
+        <div style="display:flex; gap:10px; margin-top:10px; align-items:center;">
+            <input type="text" id="tags" placeholder="Tag (e.g. #REB)" style="flex:1;">
+            <input type="file" id="postImage" accept="image/*" style="color: #71767b; flex:1; font-size: 0.9rem;">
+        </div>
+        
+        <button id="postBtn" style="margin-top:10px;">Post</button>
       </div>
 
       <div id="feed"></div>
     </main>
 
-    <!-- Right Sidebar -->
     <aside class="sidebar-right">
       <div class="trending">
         <h3>Trending Concerns</h3>
         <ul id="trendingList">
-          <li>#LackOfResources</li>
-          <li>#InclusiveEducation</li>
-          <li>#FairGrading</li>
+          <li style="color:#1d9bf0; margin-bottom:8px;">#LackOfResources</li>
+          <li style="color:#1d9bf0; margin-bottom:8px;">#InclusiveEducation</li>
+          <li style="color:#1d9bf0; margin-bottom:8px;">#FairGrading</li>
         </ul>
       </div>
     </aside>
   </div>
 
-  <script src="js/data.js"></script>
   <script src="js/main.js"></script>
 </body>
-
 </html>

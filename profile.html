@@ -3,30 +3,101 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profile - Urumuri Platform</title>
+  <title>Profile - Urumuri</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <div class="container">
+    <aside class="sidebar-left">
+      <div class="logo">URUMURI</div>
+      <nav>
+        <a href="index.html">🏠 Home</a>
+        <a href="dashboard.html">📊 Dashboard</a>
+        <a href="profile.html" style="color: #1d9bf0; font-weight: bold;">👤 Profile</a>
+        <a href="#" onclick="localStorage.clear(); window.location.href='login.html'">🚪 Logout</a>
+      </nav>
+    </aside>
 
-  <nav class="navbar">
-    <div class="logo">URUMURI</div>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="dashboard.html">Dashboard</a>
-      <a href="login.html">Logout</a>
-    </div>
-  </nav>
+    <main class="feed-area" style="padding:20px;">
+      
+      <div class="report-card" style="text-align:center; padding: 40px 20px;">
+        <div class="avatar-placeholder" style="width:100px; height:100px; margin:0 auto 20px; font-size:3rem; border-radius: 50%; background: #2f3336; display:flex; align-items:center; justify-content:center;" id="profileInitials">
+          U
+        </div>
+        <h2 id="profileName" style="margin-bottom: 5px;">Loading...</h2>
+        <p id="profileEmail" style="color:#71767b; margin-bottom: 20px;"></p>
+        
+        <button id="editProfileBtn" style="background-color: transparent; border: 1px solid #536471; color: white; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold;">
+          Edit Profile
+        </button>
+      </div>
 
-  <section class="profile">
-    <h2>Student Profile</h2>
-    <div class="profile-card">
-      <img src="images/logo.png" alt="Profile Photo" class="profile-img" />
-      <h3>Iliza Larissa</h3>
-      <p>Email: iliza@example.com</p>
-      <p>Posts made: 5</p>
-      <button>Edit Profile</button>
-    </div>
-  </section>
+      <h3 style="border-bottom: 1px solid #2f3336; padding-bottom: 10px; margin-top: 30px;">My Posts</h3>
+      
+      <div id="feed"></div> 
 
+    </main>
+
+    <aside class="sidebar-right"></aside>
+  </div>
+
+  <script src="js/main.js"></script>
+
+  <script>
+    const profileToken = localStorage.getItem("urumuri_token");
+    let profileUser = JSON.parse(localStorage.getItem("urumuri_user"));
+    const API_BASE_AUTH = "http://localhost:5005/api/auth";
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // 1. Fill Profile Info
+        if(profileUser) {
+            document.getElementById("profileName").innerText = profileUser.name;
+            document.getElementById("profileEmail").innerText = profileUser.email;
+            document.getElementById("profileInitials").innerText = profileUser.name[0].toUpperCase();
+        } else {
+            window.location.href = "login.html";
+        }
+        
+        // 2. Handle Edit Button
+        const editBtn = document.getElementById("editProfileBtn");
+        if(editBtn) {
+            editBtn.addEventListener("click", async () => {
+                const newName = prompt("Enter your new display name:", profileUser.name);
+                
+                if(newName && newName.trim() !== "" && newName !== profileUser.name) {
+                    try {
+                        const res = await fetch(`${API_BASE_AUTH}/update`, {
+                            method: "PUT",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Authorization": `Bearer ${profileToken}`
+                            },
+                            body: JSON.stringify({ newName: newName.trim() })
+                        });
+                        
+                        const data = await res.json();
+
+                        if(res.ok) {
+                            // Update Local Storage
+                            profileUser.name = data.newName;
+                            localStorage.setItem("urumuri_user", JSON.stringify(profileUser));
+                            
+                            // Update UI immediately
+                            document.getElementById("profileName").innerText = data.newName;
+                            document.getElementById("profileInitials").innerText = data.newName[0].toUpperCase();
+                            
+                            alert("Profile updated successfully!");
+                        } else {
+                            alert(data.error || "Update failed");
+                        }
+                    } catch(e) { 
+                        console.error(e); 
+                        alert("Network error. Is the server running?"); 
+                    }
+                }
+            });
+        }
+    });
+  </script>
 </body>
 </html>

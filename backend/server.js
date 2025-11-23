@@ -1,42 +1,41 @@
-// backend/server.js
-app.get("/test", (_req, res) => res.send("Root OK"));
-
-console.log("[SERVER] server.js loaded from:", __filename);
-
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const path = require("path");
 
-// Optional: confirm where Express resolves your middleware from
-console.log("[SERVER] auth middleware resolve:", require.resolve("./middleware/auth"));
-
+// 1. Initialize App
 const app = express();
-console.log("[STARTUP] Express server starting…");
 
+// 2. Middleware
 app.use(cors());
 app.use(bodyParser.json());
+app.use("/uploads", express.static("uploads"));
 
-// DB init (kept as-is so your existing db.js runs)
-const db = require("./db");
+// 3. Import Routes
+try {
+    const authRoutes = require("./routes/auth");
+    const postRoutes = require("./routes/posts");
+    const commentRoutes = require("./routes/comments");
 
-// Route modules
-const authRoutes = require("./routes/auth");
-console.log("[SERVER] authRoutes loaded:", require.resolve("./routes/auth"));
+    // 4. Mount Routes
+    app.use("/api/auth", authRoutes);
+    app.use("/api/posts", postRoutes);
+    app.use("/api/comments", commentRoutes);
+    
+    console.log("[SERVER] Routes mounted successfully.");
+} catch (error) {
+    console.error("[SERVER] Error mounting routes:", error.message);
+}
 
-const postRoutes = require("./routes/posts");
-console.log("[SERVER] postRoutes loaded:", require.resolve("./routes/posts"));
+// 5. Root Route (Health Check)
+app.get("/", (req, res) => {
+  res.send("Urumuri Backend is Running on Port 5005!");
+});
 
-const commentRoutes = require("./routes/comments");
-console.log("[SERVER] commentRoutes loaded:", require.resolve("./routes/comments"));
-
-// Mount routes
-app.use("/api/auth", authRoutes);
-app.use("/api/posts", postRoutes);
-app.use("/api/comments", commentRoutes);
-
-// Health check
-app.get("/", (_req, res) => res.send("Urumuri backend running"));
-
-const PORT = 5001;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// 6. Start Server on NEW PORT
+const PORT = 5005; // CHANGED TO 5005
+app.listen(PORT, () => {
+  console.log(`\n✅ SERVER STARTED on http://localhost:${PORT}`);
+  console.log(`👉 Posts Link: http://localhost:${PORT}/api/posts\n`);
+});
 

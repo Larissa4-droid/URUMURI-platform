@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const db = require("../db");
+const auth = require("../middleware/auth"); // <--- THIS WAS MISSING!
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || "change_this_secret";
@@ -30,7 +31,6 @@ router.post("/register", (req, res) => {
 });
 
 // Login
-// Login
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) return res.status(400).json({ error: "Email and password required" });
@@ -42,20 +42,29 @@ router.post("/login", (req, res) => {
     const ok = await bcrypt.compare(password, user.password);
     if (!ok) return res.status(401).json({ error: "Invalid credentials" });
 
-    // Generate a JWT token—do not return the password!
     const token = jwt.sign(
       { userId: user.id, name: user.name, email: user.email },
       JWT_SECRET,
       { expiresIn: "2h" }
     );
 
-    // Never send back the password!
     res.json({
       message: "Login successful",
-      token, // <- TOKEN IS NOW INCLUDED!
+      token,
       user: { id: user.id, name: user.name, email: user.email }
     });
   });
+});
+
+// Update Profile Name
+router.put("/update", auth, (req, res) => {
+    const { newName } = req.body;
+    if (!newName) return res.status(400).json({ error: "Name required" });
+
+    db.run("UPDATE users SET name = ? WHERE id = ?", [newName, req.user.userId], function(err) {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ success: true, newName });
+    });
 });
 
 module.exports = router;

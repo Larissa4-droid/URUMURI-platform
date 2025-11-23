@@ -4,13 +4,13 @@ const db = new sqlite3.Database("./urumuri.db", (err) => {
   else console.log("Connected to SQLite database.");
 });
 
-// Create tables if not exist
 db.serialize(() => {
   db.run(`CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     email TEXT UNIQUE,
-    password TEXT
+    password TEXT,
+    profile_pic TEXT
   )`);
 
   db.run(`CREATE TABLE IF NOT EXISTS posts (
@@ -18,7 +18,14 @@ db.serialize(() => {
     user_id INTEGER,
     content TEXT,
     tag TEXT,
+    image_url TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )`);
+
+  db.run(`CREATE TABLE IF NOT EXISTS likes (
+    user_id INTEGER,
+    post_id INTEGER,
+    PRIMARY KEY (user_id, post_id)
   )`);
 
   db.run(`CREATE TABLE IF NOT EXISTS comments (

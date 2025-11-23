@@ -1,4 +1,4 @@
-const apiBase = "http://localhost:5001/api";
+const apiBase = "http://localhost:5005/api";
 
 const loginBtn = document.getElementById("loginBtn");
 const registerBtn = document.getElementById("registerBtn");
