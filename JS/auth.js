@@ -1,4 +1,4 @@
-const apiBase = "https://urumuri-backend.onrender.com/api"; 
+const apiBase = "https://urumuri-platform.onrender.com/api"; 
 
 const loginBtn = document.getElementById("loginBtn");
 const registerBtn = document.getElementById("registerBtn");

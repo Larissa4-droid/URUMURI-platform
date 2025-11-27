@@ -1,4 +1,4 @@
-const API_URL = "https://urumuri-backend.onrender.com/api"; 
+const API_URL = "https://urumuri-platform.onrender.com/api"; 
 const token = localStorage.getItem("urumuri_token");
 const currentUser = JSON.parse(localStorage.getItem("urumuri_user"));
 
