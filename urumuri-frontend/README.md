@@ -1,70 +1,106 @@
-# Getting Started with Create React App
+# 🕯️ URUMURI PLATFORM
+### Empowering Student Voices in Education
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![NodeJS](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white) ![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge) ![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
-## Available Scripts
+**Urumuri** is a digital platform designed to bridge the gap between students and school administrators. It provides a safe, anonymous space for students to report issues, share concerns, and view real-time insights into student welfare through an interactive dashboard.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+##  Quick Links
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+| Resource | Link |
+| :--- | :--- |
+| ** Deployed Site** | [Click here to view the live app] https://urumuriplatform.netlify.app/
+| ** SRS Document** | https://docs.google.com/document/d/13GC8qFMNB1f9pr61Bg3A5s_t1mkpxca3H6T_RdCfuQo/edit?usp=sharing
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+| ** Demo Video** | [Watch the Walkthrough] https://www.youtube.com/watch?v=eAyig5HG2Tw
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+##  Project Structure
 
-### `npm run build`
+The project is organized into two main components:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* **`root/` (Frontend):** Contains the static HTML, CSS, and Vanilla JavaScript files for the user interface.
+* **`backend/` (Server):** Contains the Node.js API, authentication logic, and the SQLite database (`urumuri.db`).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🛠️ Local Setup Instructions
 
-### `npm run eject`
+Follow these steps to get the project running locally on your machine.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 1. Prerequisites
+Ensure you have the following installed:
+* [Node.js](https://nodejs.org/) (v14 or higher)
+* [Git](https://git-scm.com/)
+* **VS Code** (Recommended) with the "Live Server" extension.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 2. Clone the Repository
+Open your terminal and run:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+git clone [https://github.com/larissa4-droid/urumuri-platform.git](https://github.com/larissa4-droid/urumuri-platform.git)
+cd urumuri-platform
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. Backend Setup (Server)
+The backend must be running for the application to function.
 
-## Learn More
+a.Navigate to the backend folder:
+cd backend
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+b.Install dependencies:
+npm install
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+c.Start the server:
+npm start
+Success: You should see ✅ SERVER STARTED on Port 5005 in your terminal. Keep this terminal open.
 
-### Code Splitting
+4. Frontend Setup (Client)
+By default, the frontend connects to the live deployed server. For local testing, you must point it to your local backend.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Configure API URL: Open the following files in your code editor:
 
-### Analyzing the Bundle Size
+JS/auth.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+JS/main.js
 
-### Making a Progressive Web App
+JS/dashboard.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+profile.html (Script section at the bottom)
 
-### Advanced Configuration
+Locate the API_URL or API_BASE variable at the top and change it from the Render URL to localhost:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+// Change this:
+// const API_URL = "[https://urumuri-platform.onrender.com/api](https://urumuri-platform.onrender.com/api)";
 
-### Deployment
+// To this:
+const API_URL = "http://localhost:5005/api";
+Run the App:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Right-click on index.html or login.html in VS Code.
 
-### `npm run build` fails to minify
+Select "Open with Live Server".
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+🧪 Key Features
+Authentication: Secure Login and Registration using JWT (JSON Web Tokens).
+
+Anonymous Reporting: Students can post issues with an "Anonymous" tag to protect their identity.
+
+Multimedia Support: Users can upload images or videos as evidence for their reports.
+
+Interactive Feed: Like, comment, and reply to posts in real-time.
+
+Live Dashboard: A visual analytics dashboard (using Chart.js) showing trending issues (e.g., #Hygiene, #REB).
+
+API Endpoints
+The backend provides the following RESTful endpoints:
+
+Method,Endpoint,Description,Auth Required
+POST,/api/auth/register,Register a new user,❌
+POST,/api/auth/login,Login and receive Token,❌
+GET,/api/posts,Fetch all posts,❌
+POST,/api/posts,Create a new post,✅
+POST,/api/posts/:id/like,Like a post,✅
+GET,/api/comments/:id,Get comments for a post,❌
