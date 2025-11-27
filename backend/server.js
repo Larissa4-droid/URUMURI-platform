@@ -3,21 +3,25 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
 
-// 1. Initialize App
 const app = express();
 
-// 2. Middleware
-app.use(cors());
+// 1. CORS CONFIGURATION (Crucial for Netlify)
+// This tells the browser: "Yes, netlify.app is allowed to talk to me."
+app.use(cors({
+    origin: "*", // Allow any frontend to connect (Easiest for now)
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 app.use(bodyParser.json());
 app.use("/uploads", express.static("uploads"));
 
-// 3. Import Routes
+// 2. Import Routes
 try {
     const authRoutes = require("./routes/auth");
     const postRoutes = require("./routes/posts");
     const commentRoutes = require("./routes/comments");
 
-    // 4. Mount Routes
     app.use("/api/auth", authRoutes);
     app.use("/api/posts", postRoutes);
     app.use("/api/comments", commentRoutes);
@@ -27,15 +31,16 @@ try {
     console.error("[SERVER] Error mounting routes:", error.message);
 }
 
-// 5. Root Route (Health Check)
+// 3. Root Route
 app.get("/", (req, res) => {
-  res.send("Urumuri Backend is Running on Port 5005!");
+  res.send("Urumuri Backend is Live!");
 });
 
-// 6. Start Server on NEW PORT
-const PORT = 5005; // CHANGED TO 5005
+// 4. DYNAMIC PORT SETTING (The Fix)
+// process.env.PORT is what Render uses. 5005 is what you use locally.
+const PORT = process.env.PORT || 5005; 
+
 app.listen(PORT, () => {
-  console.log(`\n✅ SERVER STARTED on http://localhost:${PORT}`);
-  console.log(`👉 Posts Link: http://localhost:${PORT}/api/posts\n`);
+  console.log(`\n✅ SERVER STARTED on Port ${PORT}`);
 });
 
