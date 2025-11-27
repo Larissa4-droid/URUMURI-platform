@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:5005/api"; // Ensure this matches your server port
+const API_BASE = "https://urumuri-backend.onrender.com/api"; 
 let myChart = null; // Variable to store our chart instance
 
 async function updateDashboard() {
