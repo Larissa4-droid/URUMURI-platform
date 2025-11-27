@@ -27,30 +27,29 @@ function renderPosts(posts) {
     postEl.classList.add("post");
     const likeCount = await getLikeCount(post.id);
 
-    // --- VIDEO & IMAGE LOGIC ---
+    // --- VIDEO & IMAGE LOGIC (FIXED) ---
+    // We now use the Live Server URL for media, not localhost
+    const SERVER_URL = "https://urumuri-backend.onrender.com"; 
+
     let mediaHtml = "";
     if (post.image_url) {
-        // Check if the file extension suggests a video
         const isVideo = post.image_url.match(/\.(mp4|webm|ogg|mov)$/i);
         
         if (isVideo) {
             mediaHtml = `
                 <video controls style="max-width:100%; border-radius:10px; margin-top:10px;">
-                    <source src="http://localhost:5005${post.image_url}" type="video/mp4">
+                    <source src="${SERVER_URL}${post.image_url}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>`;
         } else {
-            mediaHtml = `<img src="http://localhost:5005${post.image_url}" class="post-image" style="max-width:100%; border-radius:10px; margin-top:10px;">`;
+            mediaHtml = `<img src="${SERVER_URL}${post.image_url}" class="post-image" style="max-width:100%; border-radius:10px; margin-top:10px;" onerror="this.style.display='none'">`;
         }
     }
 
     // --- ANONYMITY LOGIC ---
-    // Check if the tag contains the secret marker "ANON"
     const isAnon = post.tag && post.tag.includes("ANON");
     const displayName = isAnon ? "Anonymous Student" : post.author;
     const displayInitials = isAnon ? "?" : (post.author ? post.author[0].toUpperCase() : "U");
-    
-    // Remove "ANON" from the displayed tag so it looks clean
     const cleanTag = post.tag ? post.tag.replace("ANON", "").trim() : "";
 
     postEl.innerHTML = `
@@ -84,21 +83,20 @@ function renderPosts(posts) {
   });
 }
 
-// 3. Create Post (Supports Image/Video & Anonymity)
+// 3. Create Post
 const postBtn = document.getElementById("postBtn");
 if (postBtn) {
     postBtn.addEventListener("click", async () => {
         const content = document.getElementById("postText").value;
         const tag = document.getElementById("tags").value;
         const fileInput = document.getElementById("postImage");
-        const anonCheck = document.getElementById("anonCheck"); // Get the checkbox
+        const anonCheck = document.getElementById("anonCheck");
         
         if (!content && fileInput.files.length === 0) return alert("Write something or upload media!");
 
         const formData = new FormData();
         formData.append("content", content);
         
-        // Handle Anonymity Marker
         let finalTag = tag;
         if (anonCheck && anonCheck.checked) {
             finalTag += " ANON"; 
@@ -112,14 +110,14 @@ if (postBtn) {
         try {
             const res = await fetch(`${API_URL}/posts`, {
                 method: "POST",
-                headers: { "Authorization": `Bearer ${token}` }, // No Content-Type for FormData!
+                headers: { "Authorization": `Bearer ${token}` },
                 body: formData
             });
             if (res.ok) {
                 document.getElementById("postText").value = "";
                 document.getElementById("tags").value = "";
-                fileInput.value = ""; // Clear file
-                if(anonCheck) anonCheck.checked = false; // Reset checkbox
+                fileInput.value = "";
+                if(anonCheck) anonCheck.checked = false;
                 loadPosts();
             } else {
                 alert("Failed to post");
@@ -128,7 +126,7 @@ if (postBtn) {
     });
 }
 
-// 4. Comments (Fixed Clearing)
+// 4. Comments
 window.postComment = async function(postId) {
     const input = document.getElementById(`input-${postId}`);
     const text = input.value.trim();
@@ -144,13 +142,13 @@ window.postComment = async function(postId) {
             body: JSON.stringify({ post_id: postId, comment: text })
         });
         if (res.ok) {
-            input.value = ""; // CLEAR INPUT HERE
+            input.value = "";
             loadComments(postId);
         }
     } catch (e) { alert("Error posting comment"); }
 };
 
-// Helper functions (Likes/Load Comments same as before)
+// Helper Functions
 window.toggleComments = function(postId) {
     const el = document.getElementById(`comments-${postId}`);
     el.classList.toggle("hidden");
