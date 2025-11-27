@@ -263,14 +263,56 @@ body {
 }
 
 /* Mobile Responsive */
+
 @media (max-width: 900px) {
   .container {
-    grid-template-columns: 100%;
+    display: block; /* Switch from Grid to Block layout */
+    width: 100%;
+    padding: 0;
   }
-  .sidebar-left, .sidebar-right {
+
+  /* Hide sidebars on mobile to save space */
+  .sidebar-left, 
+  .sidebar-right {
     display: none;
   }
+
+  /* Make feed full width */
   .feed-area {
-    border: none;
+    width: 100%;
+    border-right: none;
+    border-left: none;
+    padding-bottom: 60px; /* Space for bottom nav */
   }
+
+  /* Add a bottom navigation bar for Mobile Users */
+  body::after {
+    content: ""; 
+    display: block; 
+    height: 50px; 
+  }
+  
+  .mobile-nav {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: black;
+    border-top: 1px solid #2f3336;
+    justify-content: space-around;
+    padding: 15px 0;
+    z-index: 1000;
+  }
+
+  .mobile-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+  }
+}
+
+/* Hide mobile nav on desktop */
+.mobile-nav {
+  display: none;
 }
