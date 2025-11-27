@@ -29,7 +29,7 @@ function renderPosts(posts) {
 
     // --- VIDEO & IMAGE LOGIC (FIXED) ---
     // We now use the Live Server URL for media, not localhost
-    const SERVER_URL = "https://urumuri-backend.onrender.com"; 
+    const SERVER_URL = "https://urumuri-platform.onrender.com"; 
 
     let mediaHtml = "";
     if (post.image_url) {
