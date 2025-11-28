@@ -195,7 +195,7 @@ Examples:
 * `POST /api/posts/:id/comment`
 
 
-# 📁 Project Structure
+# Project Structure
 
 ```
 URUMURI-platform
@@ -225,7 +225,7 @@ urumuri-frontend/
 ```
 
 
-# 🚨 7. Common Errors & Fixes
+# 7. Common Errors & Fixes
 
 ### Error: Cannot connect to SQLite
 
